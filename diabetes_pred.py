@@ -3,14 +3,14 @@ import pandas as pd
 import numpy as np
 import pickle
 from sklearn.preprocessing import StandardScaler,LabelEncoder
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
+# from pymongo.mongo_client import MongoClient
+# from pymongo.server_api import ServerApi
 
-# Connect to the MongoDB cluster to store the inputs and the prediction
-uri = "mongodb+srv://*******@cluster0.ugo9l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-client = MongoClient(uri, server_api=ServerApi('1'))
-db = client['diabetes']  # Create a new database
-collection = db['diabetes_pred'] # Create a new collection/table in the database
+# # Connect to the MongoDB cluster to store the inputs and the prediction
+# uri = "mongodb+srv://*******@cluster0.ugo9l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+# client = MongoClient(uri, server_api=ServerApi('1'))
+# db = client['diabetes']  # Create a new database
+# collection = db['diabetes_pred'] # Create a new collection/table in the database
 
 def load_ridge_model():
     with open('diabetes_ridge_final_model.pkl', 'rb') as f:
@@ -74,10 +74,10 @@ def main():
         st.success(f"Your prediction result using Ridge Regression is: {round(float(prediction_ridge[0]), 3)}")
         st.success(f"Your prediction result using Lasso Regression is: {round(float(prediction_lasso[0]), 3)}")
 
-        user_data["prediction_ridge"] = round(float(prediction_ridge[0]), 3)    # Add the ridge prediction to the user_data dictionary
-        user_data["prediction_lasso"] = round(float(prediction_lasso[0]), 3)    # Add the lasso prediction to the user_data dictionary
-        user_data = {key: int(value) if isinstance(value, np.integer) else float(value) if isinstance(value, float) else value for key, value in user_data.items()}    # Convert the values to int or float if they are of type np.integer or np.float
-        collection.insert_one(user_data)    # Insert the user_data dictionary as a record to the MongoDB collection
+        # user_data["prediction_ridge"] = round(float(prediction_ridge[0]), 3)    # Add the ridge prediction to the user_data dictionary
+        # user_data["prediction_lasso"] = round(float(prediction_lasso[0]), 3)    # Add the lasso prediction to the user_data dictionary
+        # user_data = {key: int(value) if isinstance(value, np.integer) else float(value) if isinstance(value, float) else value for key, value in user_data.items()}    # Convert the values to int or float if they are of type np.integer or np.float
+        # collection.insert_one(user_data)    # Insert the user_data dictionary as a record to the MongoDB collection
 
 if __name__ == "__main__":
     main()
